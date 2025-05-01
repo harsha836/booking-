@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - CinemaTickets</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <style>
+        :root {
+            --primary-color: #032541;
+            --secondary-color: #01b4e4;
+            --accent-color: #f5c518;
+            --light-bg: #f8f9fa;
+            --dark-text: #212529;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--light-bg);
+        }
+
+        .navbar {
+            background-color: var(--primary-color);
+        }
+
+        .navbar-brand {
+            font-weight: bold;
+            color: white !important;
+        }
+
+        .nav-link {
+            color: rgba(255, 255, 255, 0.85) !important;
+        }
+
+        .nav-link:hover {
+            color: white !important;
+        }
+
+        .btn-primary {
+            background-color: var(--secondary-color);
+            border-color: var(--secondary-color);
+        }
+
+        .btn-primary:hover {
+            background-color: #0099c9;
+            border-color: #0099c9;
+        }
+
+        .footer {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 20px 0;
+        }
+
+        .auth-container {
+            max-width: 500px;
+            margin: 80px auto;
+        }
+
+        .auth-card {
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .auth-header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 20px;
+            border-radius: 10px 10px 0 0;
+            text-align: center;
+        }
+
+        .form-control:focus {
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 0.25rem rgba(1, 180, 228, 0.25);
+        }
+
+        .password-strength {
+            height: 5px;
+            margin-top: 8px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .password-requirements {
+            font-size: 0.8rem;
+        }
+
+        .requirement-met {
+            color: #198754;
+        }
+
+        .requirement-not-met {
+            color: #6c757d;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">CinemaTickets</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="movies.html">Movies</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="upcoming.html">Coming Soon</a>
+                    </li>
+                </ul>
+                <div class="d-flex">
+                    <a href="login.html" class="btn btn-outline-light me-2">Login</a>
+                    <a href="register.html" class="btn btn-primary active">Register</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Registration Form -->
+    <div class="container auth-container">
+        <div class="card auth-card">
+            <div class="auth-header">
+                <h3 class="m-0"><i class="fas fa-user-plus me-2"></i> Create Account</h3>
+            </div>
+            <div class="card-body p-4">
+                <form id="registrationForm" class="needs-validation" novalidate>
+                    <div class="mb-3">
+                        <label for="fullName" class="form-label">Full Name</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-user"></i></span>
+                            <input type="text" class="form-control" id="fullName" placeholder="Enter your full name"
+                                required>
+                        </div>
+                        <div class="invalid-feedback">Please enter your name.</div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email address</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                            <input type="email" class="form-control" id="email" placeholder="Enter your email" required>
+                        </div>
+                        <div class="invalid-feedback">Please enter a valid email address.</div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Password</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                            <input type="password" class="form-control" id="password" placeholder="Create a password"
+                                required>
+                            <button class="btn btn-outline-secondary" type="button" id="togglePassword">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                        <div class="password-strength bg-secondary"></div>
+                        <div class="password-requirements mt-2">
+                            <p class="m-0" id="length-req"><i class="fas fa-circle"></i> At least 8 characters</p>
+                            <p class="m-0" id="uppercase-req"><i class="fas fa-circle"></i> At least one uppercase
+                                letter</p>
+                            <p class="m-0" id="number-req"><i class="fas fa-circle"></i> At least one number</p>
+                            <p class="m-0" id="special-req"><i class="fas fa-circle"></i> At least one special character
+                            </p>
+                        </div>
+                        <div class="invalid-feedback">Please create a secure password.</div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="confirmPassword" class="form-label">Confirm Password</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                            <input type="password" class="form-control" id="confirmPassword"
+                                placeholder="Confirm your password" required>
+                        </div>
+                        <div class="invalid-feedback">Passwords do not match.</div>
+                    </div>
+
+                    <div class="mb-3 form-check">
+                        <input type="checkbox" class="form-check-input" id="termsCheck" required>
+                        <label class="form-check-label" for="termsCheck">I agree to the <a href="#"
+                                class="text-decoration-none">Terms of Service</a> and <a href="#"
+                                class="text-decoration-none">Privacy Policy</a></label>
+                        <div class="invalid-feedback">You must agree to the terms and conditions.</div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary w-100 py-2">Create Account</button>
+
+                    <div class="text-center mt-3">
+                        <span>Already have an account? </span>
+                        <a href="login.html" class="text-decoration-none">Login</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer mt-auto">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-4 mb-md-0">
+                    <h5>CinemaTickets</h5>
+                    <p>The best way to book your movie tickets online.</p>
+                </div>
+                <div class="col-md-2 mb-4 mb-md-0">
+                    <h5>Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="index.html" class="text-white">Home</a></li>
+                        <li><a href="movies.html" class="text-white">Movies</a></li>
+                        <li><a href="upcoming.html" class="text-white">Coming Soon</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3 mb-4 mb-md-0">
+                    <h5>Support</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-white">Contact Us</a></li>
+                        <li><a href="#" class="text-white">FAQs</a></li>
+                        <li><a href="#" class="text-white">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h5>Connect</h5>
+                    <div class="d-flex">
+                        <a href="#" class="text-white me-3"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-white me-3"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-white me-3"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-white"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+            <hr class="bg-white my-4">
+            <div class="text-center">
+                <p class="mb-0">&copy; 2025 CinemaTickets. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Form Validation and Password Strength -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Form validation
+            const form = document.getElementById('registrationForm');
+            const password = document.getElementById('password');
+            const confirmPassword = document.getElementById('confirmPassword');
+            const passwordStrength = document.querySelector('.password-strength');
+
+            // Password toggle
+            const togglePassword = document.getElementById('togglePassword');
+            togglePassword.addEventListener('click', function () {
+                const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+                password.setAttribute('type', type);
+
+                this.querySelector('i').classList.toggle('fa-eye');
+                this.querySelector('i').classList.toggle('fa-eye-slash');
+            });
+
+            // Password strength and requirements
+            const lengthReq = document.getElementById('length-req');
+            const uppercaseReq = document.getElementById('uppercase-req');
+            const numberReq = document.getElementById('number-req');
+            const specialReq = document.getElementById('special-req');
+
+            password.addEventListener('input', function () {
+                const value = password.value;
+
+                // Check requirements
+                const hasLength = value.length >= 8;
+                const hasUppercase = /[A-Z]/.test(value);
+                const hasNumber = /[0-9]/.test(value);
+                const hasSpecial = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(value);
+
+                // Update requirement indicators
+                toggleRequirement(lengthReq, hasLength);
+                toggleRequirement(uppercaseReq, hasUppercase);
+                toggleRequirement(numberReq, hasNumber);
+                toggleRequirement(specialReq, hasSpecial);
+
+                // Calculate strength
+                let strength = 0;
+                if (hasLength) strength += 25;
+                if (hasUppercase) strength += 25;
+                if (hasNumber) strength += 25;
+                if (hasSpecial) strength += 25;
+
+                // Update strength indicator
+                passwordStrength.style.width = strength + '%';
+
+                if (strength <= 25) {
+                    passwordStrength.className = 'password-strength bg-danger';
+                } else if (strength <= 50) {
+                    passwordStrength.className = 'password-strength bg-warning';
+                } else if (strength <= 75) {
+                    passwordStrength.className = 'password-strength bg-info';
+                } else {
+                    passwordStrength.className = 'password-strength bg-success';
+                }
+            });
+
+            function toggleRequirement(element, isMet) {
+                if (isMet) {
+                    element.classList.add('requirement-met');
+                    element.classList.remove('requirement-not-met');
+                    element.querySelector('i').className = 'fas fa-check-circle';
+                } else {
+                    element.classList.add('requirement-not-met');
+                    element.classList.remove('requirement-met');
+                    element.querySelector('i').className = 'fas fa-circle';
+                }
+            }
+
+            // Form submission
+            form.addEventListener('submit', function (event) {
+                event.preventDefault();
+
+                if (password.value !== confirmPassword.value) {
+                    confirmPassword.setCustomValidity("Passwords don't match");
+                } else {
+                    confirmPassword.setCustomValidity('');
+                }
+
+                if (!form.checkValidity()) {
+                    event.stopPropagation();
+                } else {
+                    // Simulate registration
+                    alert('Registration successful! Redirecting to login page...');
+                    window.location.href = 'login.html';
+                }
+
+                form.classList.add('was-validated');
+            });
+        });
+    </script>
+</body>
+
+</html>

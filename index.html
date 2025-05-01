@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CinemaTickets - Movie Ticket Booking System</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <style>
+        :root {
+            --primary-color: #032541;
+            --secondary-color: #01b4e4;
+            --accent-color: #f5c518;
+            --light-bg: #f8f9fa;
+            --dark-text: #212529;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--light-bg);
+        }
+
+        .navbar {
+            background-color: var(--primary-color);
+        }
+
+        .navbar-brand {
+            font-weight: bold;
+            color: white !important;
+        }
+
+        .nav-link {
+            color: rgba(255, 255, 255, 0.85) !important;
+        }
+
+        .nav-link:hover {
+            color: white !important;
+        }
+
+        .btn-primary {
+            background-color: var(--secondary-color);
+            border-color: var(--secondary-color);
+        }
+
+        .btn-primary:hover {
+            background-color: #0099c9;
+            border-color: #0099c9;
+        }
+
+        .movie-card {
+            transition: transform 0.3s;
+            margin-bottom: 20px;
+            height: 100%;
+        }
+
+        .movie-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .movie-card img {
+            height: 300px;
+            object-fit: cover;
+        }
+
+        .movie-card .card-body {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .movie-card .card-title {
+            font-weight: bold;
+        }
+
+        .movie-card .badge {
+            background-color: var(--accent-color);
+            color: var(--dark-text);
+        }
+
+        .footer {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 20px 0;
+        }
+
+        /* Hero section */
+        .hero {
+            background: linear-gradient(rgba(3, 37, 65, 0.8), rgba(3, 37, 65, 0.8)),
+                url('https://via.placeholder.com/1600x800') center/cover no-repeat;
+            color: white;
+            padding: 100px 0;
+            margin-bottom: 40px;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: bold;
+        }
+
+        /* Seat selection styles */
+        .screen {
+            background-color: var(--secondary-color);
+            height: 12px;
+            border-radius: 50% / 100% 100% 0 0;
+            width: 80%;
+            margin: 0 auto 30px;
+            position: relative;
+        }
+
+        .screen:before {
+            content: "SCREEN";
+            position: absolute;
+            top: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 12px;
+            color: var(--secondary-color);
+        }
+
+        .seat {
+            width: 30px;
+            height: 30px;
+            margin: 4px;
+            border-radius: 5px;
+            background-color: #ddd;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            transition: background-color 0.2s;
+        }
+
+        .seat.selected {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+
+        .seat.occupied {
+            background-color: #aaa;
+            cursor: not-allowed;
+        }
+
+        .row-label {
+            width: 30px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .seats-container {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .seat-row {
+            margin-bottom: 8px;
+        }
+
+        /* Login/Register page styles */
+        .auth-container {
+            max-width: 500px;
+            margin: 80px auto;
+        }
+
+        .auth-tabs .nav-link {
+            color: var(--dark-text) !important;
+        }
+
+        .auth-tabs .nav-link.active {
+            font-weight: bold;
+            color: var(--secondary-color) !important;
+        }
+
+        /* Movie details page */
+        .movie-detail-header {
+            background-size: cover;
+            background-position: center;
+            padding: 150px 0 50px;
+            position: relative;
+        }
+
+        .movie-detail-header:before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to right, rgba(3, 37, 65, 0.9) 20%, rgba(3, 37, 65, 0.5) 100%);
+        }
+
+        .movie-poster {
+            border-radius: 8px;
+            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .movie-metadata {
+            color: #adb5bd;
+            margin-bottom: 15px;
+        }
+
+        /* Admin panel styles */
+        .sidebar {
+            background-color: var(--primary-color);
+            min-height: calc(100vh - 56px);
+            color: white;
+        }
+
+        .sidebar .nav-link {
+            color: rgba(255, 255, 255, 0.8) !important;
+            padding: 10px 20px;
+            border-left: 4px solid transparent;
+        }
+
+        .sidebar .nav-link:hover,
+        .sidebar .nav-link.active {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white !important;
+            border-left: 4px solid var(--secondary-color);
+        }
+
+        .dashboard-card {
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .dashboard-card:hover {
+            transform: translateY(-5px);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">CinemaTickets</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="movies.html">Movies</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="upcoming.html">Coming Soon</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="seats.html">Seats</a>
+                    </li>
+                </ul>
+                <div class="d-flex">
+                    <a href="login.html" class="btn btn-outline-light me-2">Login</a>
+                    <a href="register.html" class="btn btn-primary">Register</a>
+
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content Area - Home Page -->
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="container text-center">
+                <h1>Book Movie Tickets Online</h1>
+                <p class="lead">Experience the best movies with comfort and ease</p>
+                <a href="movies.html" class="btn btn-lg btn-primary mt-3">Browse Movies</a>
+            </div>
+        </section>
+
+        <!-- Now Showing Section -->
+        <section class="container mb-5">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2>Now Showing</h2>
+                <a href="movies.html" class="text-decoration-none">View All <i class="fas fa-chevron-right"></i></a>
+            </div>
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
+                <!-- Movie Card 1 -->
+                <div class="col">
+                    <div class="card movie-card">
+                        <img src="https://via.placeholder.com/300x450" class="card-img-top" alt="Movie Poster">
+                        <div class="card-body">
+                            <span class="badge mb-2">Action</span>
+                            <h5 class="card-title">Avengers: Endgame</h5>
+                            <p class="card-text text-muted">3h 2m</p>
+                            <a href="movie-details.html" class="btn btn-primary mt-auto w-100">Book Now</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Movie Card 2 -->
+                <div class="col">
+                    <div class="card movie-card">
+                        <img src="https://via.placeholder.com/300x450" class="card-img-top" alt="Movie Poster">
+                        <div class="card-body">
+                            <span class="badge mb-2">Drama</span>
+                            <h5 class="card-title">The Godfather</h5>
+                            <p class="card-text text-muted">2h 55m</p>
+                            <a href="movie-details.html" class="btn btn-primary mt-auto w-100">Book Now</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Movie Card 3 -->
+                <div class="col">
+                    <div class="card movie-card">
+                        <img src="https://via.placeholder.com/300x450" class="card-img-top" alt="Movie Poster">
+                        <div class="card-body">
+                            <span class="badge mb-2">Comedy</span>
+                            <h5 class="card-title">The Hangover</h5>
+                            <p class="card-text text-muted">1h 40m</p>
+                            <a href="movie-details.html" class="btn btn-primary mt-auto w-100">Book Now</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Movie Card 4 -->
+                <div class="col">
+                    <div class="card movie-card">
+                        <img src="https://via.placeholder.com/300x450" class="card-img-top" alt="Movie Poster">
+                        <div class="card-body">
+                            <span class="badge mb-2">Horror</span>
+                            <h5 class="card-title">The Conjuring</h5>
+                            <p class="card-text text-muted">1h 52m</p>
+                            <a href="movie-details.html" class="btn btn-primary mt-auto w-100">Book Now</a>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Coming Soon Section -->
+        <section class="container mb-5">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2>Coming Soon</h2>
+                <a href="upcoming.html" class="text-decoration-none">View All <i class="fas fa-chevron-right"></i></a>
+            </div>
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
+                <!-- Upcoming Movie Card 1 -->
+                <div class="col">
+                    <div class="card movie-card">
+                        <img src="https://via.placeholder.com/300x450" class="card-img-top" alt="Movie Poster">
+                        <div class="card-body">
+                            <span class="badge mb-2">Action</span>
+                            <h5 class="card-title">Fast & Furious 10</h5>
+                            <p class="card-text text-muted">Coming May 19</p>
+                            <button class="btn btn-outline-secondary mt-auto w-100">Notify Me</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Upcoming Movie Card 2 -->
+                <div class="col">
+                    <div class="card movie-card">
+                        <img src="https://via.placeholder.com/300x450" class="card-img-top" alt="Movie Poster">
+                        <div class="card-body">
+                            <span class="badge mb-2">Sci-Fi</span>
+                            <h5 class="card-title">Dune: Part Two</h5>
+                            <p class="card-text text-muted">Coming June 5</p>
+                            <button class="btn btn-outline-secondary mt-auto w-100">Notify Me</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Upcoming Movie Card 3 -->
+                <div class="col">
+                    <div class="card movie-card">
+                        <img src="https://via.placeholder.com/300x450" class="card-img-top" alt="Movie Poster">
+                        <div class="card-body">
+                            <span class="badge mb-2">Adventure</span>
+                            <h5 class="card-title">Indiana Jones 5</h5>
+                            <p class="card-text text-muted">Coming July 12</p>
+                            <button class="btn btn-outline-secondary mt-auto w-100">Notify Me</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Upcoming Movie Card 4 -->
+                <div class="col">
+                    <div class="card movie-card">
+                        <img src="https://via.placeholder.com/300x450" class="card-img-top" alt="Movie Poster">
+                        <div class="card-body">
+                            <span class="badge mb-2">Animation</span>
+                            <h5 class="card-title">Toy Story 5</h5>
+                            <p class="card-text text-muted">Coming August 28</p>
+                            <button class="btn btn-outline-secondary mt-auto w-100">Notify Me</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Promotion Section -->
+        <section class="container-fluid py-5 mb-5 bg-light">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-md-6">
+                        <h2 class="mb-3">Get the Ultimate Movie Experience</h2>
+                        <p class="lead mb-4">Join our membership program for exclusive discounts, early access to
+                            tickets, and special movie events.</p>
+                        <a href="register.html" class="btn btn-primary">Sign Up Now</a>
+                    </div>
+                    <div class="col-md-6 text-center">
+                        <img src="https://via.placeholder.com/600x400" alt="Promotion" class="img-fluid rounded">
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-4 mb-md-0">
+                    <h5>CinemaTickets</h5>
+                    <p>The best way to book your movie tickets online.</p>
+                </div>
+                <div class="col-md-2 mb-4 mb-md-0">
+                    <h5>Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="index.html" class="text-white">Home</a></li>
+                        <li><a href="movies.html" class="text-white">Movies</a></li>
+                        <li><a href="upcoming.html" class="text-white">Coming Soon</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3 mb-4 mb-md-0">
+                    <h5>Support</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-white">Contact Us</a></li>
+                        <li><a href="#" class="text-white">FAQs</a></li>
+                        <li><a href="#" class="text-white">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h5>Connect</h5>
+                    <div class="d-flex">
+                        <a href="#" class="text-white me-3"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-white me-3"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-white me-3"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-white"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+            <hr class="bg-white my-4">
+            <div class="text-center">
+                <p class="mb-0">&copy; 2025 CinemaTickets. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
