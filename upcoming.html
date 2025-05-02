@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upcoming Movies - Movie Booking System</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <i class="fas fa-film me-2"></i>MovieBox
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="movies.html">Now Showing</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="upcoming.html">Upcoming</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html">About Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="contact.html">Contact</a>
+                    </li>
+                </ul>
+                <div class="d-flex">
+                    <div class="dropdown user-dropdown" id="user-dropdown">
+                        <a href="login.html" class="btn btn-outline-light me-2" id="login-btn">Login</a>
+                        <a href="signup.html" class="btn btn-primary" id="signup-btn">Sign Up</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Upcoming Movies Hero Section -->
+    <div class="hero-section upcoming-hero">
+        <div class="container text-center py-5">
+            <h1 class="display-4 text-white fw-bold">Upcoming Movies</h1>
+            <p class="lead text-white">Get ready for the most anticipated releases. Reserve your tickets early!</p>
+        </div>
+    </div>
+
+    <!-- Upcoming Movies Section -->
+    <section class="container py-5">
+        <!-- Filter & Search -->
+        <div class="row mb-4">
+            <div class="col-md-6">
+                <div class="input-group">
+                    <select class="form-select" id="genre-filter">
+                        <option value="">All Genres</option>
+                        <option value="action">Action</option>
+                        <option value="comedy">Comedy</option>
+                        <option value="drama">Drama</option>
+                        <option value="horror">Horror</option>
+                        <option value="scifi">Sci-Fi</option>
+                        <option value="thriller">Thriller</option>
+                    </select>
+                    <button class="btn btn-primary" type="button" id="filter-btn">Filter</button>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search movies..." id="search-input">
+                    <button class="btn btn-primary" type="button" id="search-btn">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Movies Grid -->
+        <div class="row" id="upcoming-movies-container">
+            <!-- Movie Card 1 -->
+            <div class="col-md-4 col-lg-3 mb-4" data-genre="action scifi">
+                <div class="card movie-card h-100">
+                    <div class="position-relative">
+                        <img src="img/movie1.jpg" class="card-img-top" alt="Movie Title">
+                        <span class="badge bg-danger position-absolute top-0 end-0 m-2">Coming Soon</span>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Galactic Odyssey</h5>
+                        <div class="d-flex justify-content-between mb-2">
+                            <span class="badge bg-primary">Sci-Fi</span>
+                            <span class="badge bg-secondary">Action</span>
+                        </div>
+                        <p class="card-text">An epic space adventure that takes humanity to the edge of the universe.
+                        </p>
+                        <p class="release-date"><i class="far fa-calendar-alt me-1"></i> Release Date: July 15, 2025</p>
+                        <p class="duration"><i class="far fa-clock me-1"></i> Duration: 2h 35m</p>
+                    </div>
+                    <div class="card-footer bg-white border-top-0">
+                        <button class="btn btn-outline-primary w-100" data-bs-toggle="modal"
+                            data-bs-target="#trailerModal1">
+                            <i class="fas fa-play-circle me-1"></i> Watch Trailer
+                        </button>
+                        <button class="btn btn-success w-100 mt-2 notify-btn">
+                            <i class="fas fa-bell me-1"></i> Notify Me
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Movie Card 2 -->
+            <div class="col-md-4 col-lg-3 mb-4" data-genre="comedy">
+                <div class="card movie-card h-100">
+                    <div class="position-relative">
+                        <img src="img/movie2.jpg" class="card-img-top" alt="Movie Title">
+                        <span class="badge bg-danger position-absolute top-0 end-0 m-2">Coming Soon</span>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Laugh Factory</h5>
+                        <div class="d-flex justify-content-between mb-2">
+                            <span class="badge bg-warning text-dark">Comedy</span>
+                        </div>
+                        <p class="card-text">A hilarious comedy that will leave you in stitches from start to finish.
+                        </p>
+                        <p class="release-date"><i class="far fa-calendar-alt me-1"></i> Release Date: June 22, 2025</p>
+                        <p class="duration"><i class="far fa-clock me-1"></i> Duration: 1h 48m</p>
+                    </div>
+                    <div class="card-footer bg-white border-top-0">
+                        <button class="btn btn-outline-primary w-100" data-bs-toggle="modal"
+                            data-bs-target="#trailerModal2">
+                            <i class="fas fa-play-circle me-1"></i> Watch Trailer
+                        </button>
+                        <button class="btn btn-success w-100 mt-2 notify-btn">
+                            <i class="fas fa-bell me-1"></i> Notify Me
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Movie Card 3 -->
+            <div class="col-md-4 col-lg-3 mb-4" data-genre="drama">
+                <div class="card movie-card h-100">
+                    <div class="position-relative">
+                        <img src="img/movie3.jpg" class="card-img-top" alt="Movie Title">
+                        <span class="badge bg-danger position-absolute top-0 end-0 m-2">Coming Soon</span>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Eternal Echo</h5>
+                        <div class="d-flex justify-content-between mb-2">
+                            <span class="badge bg-info">Drama</span>
+                        </div>
+                        <p class="card-text">A touching drama about love, loss, and finding yourself in the most
+                            unexpected places.</p>
+                        <p class="release-date"><i class="far fa-calendar-alt me-1"></i> Release Date: August 10, 2025
+                        </p>
+                        <p class="duration"><i class="far fa-clock me-1"></i> Duration: 2h 15m</p>
+                    </div>
+                    <div class="card-footer bg-white border-top-0">
+                        <button class="btn btn-outline-primary w-100" data-bs-toggle="modal"
+                            data-bs-target="#trailerModal3">
+                            <i class="fas fa-play-circle me-1"></i> Watch Trailer
+                        </button>
+                        <button class="btn btn-success w-100 mt-2 notify-btn">
+                            <i class="fas fa-bell me-1"></i> Notify Me
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Movie Card 4 -->
+            <div class="col-md-4 col-lg-3 mb-4" data-genre="horror thriller">
+                <div class="card movie-card h-100">
+                    <div class="position-relative">
+                        <img src="img/movie4.jpg" class="card-img-top" alt="Movie Title">
+                        <span class="badge bg-danger position-absolute top-0 end-0 m-2">Coming Soon</span>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Shadow's Edge</h5>
+                        <div class="d-flex justify-content-between mb-2">
+                            <span class="badge bg-dark">Horror</span>
+                            <span class="badge bg-secondary">Thriller</span>
+                        </div>
+                        <p class="card-text">A spine-chilling horror that will keep you on the edge of your seat.</p>
+                        <p class="release-date"><i class="far fa-calendar-alt me-1"></i> Release Date: October 31, 2025
+                        </p>
+                        <p class="duration"><i class="far fa-clock me-1"></i> Duration: 1h 58m</p>
+                    </div>
+                    <div class="card-footer bg-white border-top-0">
+                        <button class="btn btn-outline-primary w-100" data-bs-toggle="modal"
+                            data-bs-target="#trailerModal4">
+                            <i class="fas fa-play-circle me-1"></i> Watch Trailer
+                        </button>
+                        <button class="btn btn-success w-100 mt-2 notify-btn">
+                            <i class="fas fa-bell me-1"></i> Notify Me
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Movie Card 5 -->
+            <div class="col-md-4 col-lg-3 mb-4" data-genre="action">
+                <div class="card movie-card h-100">
+                    <div class="position-relative">
+                        <img src="img/movie5.jpg" class="card-img-top" alt="Movie Title">
+                        <span class="badge bg-danger position-absolute top-0 end-0 m-2">Coming Soon</span>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Urban Strike</h5>
+                        <div class="d-flex justify-content-between mb-2">
+                            <span class="badge bg-secondary">Action</span>
+                        </div>
+                        <p class="card-text">An adrenaline-pumping action thriller with breathtaking stunts and
+                            explosive sequences.</p>
+                        <p class="release-date"><i class="far fa-calendar-alt me-1"></i> Release Date: September 3, 2025
+                        </p>
+                        <p class="duration"><i class="far fa-clock me-1"></i> Duration: 2h 10m</p>
+                    </div>
+                    <div class="card-footer bg-white border-top-0">
+                        <button class="btn btn-outline-primary w-100" data-bs-toggle="modal"
+                            data-bs-target="#trailerModal5">
+                            <i class="fas fa-play-circle me-1"></i> Watch Trailer
+                        </button>
+                        <button class="btn btn-success w-100 mt-2 notify-btn">
+                            <i class="fas fa-bell me-1"></i> Notify Me
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Movie Card 6 -->
+            <div class="col-md-4 col-lg-3 mb-4" data-genre="scifi thriller">
+                <div class="card movie-card h-100">
+                    <div class="position-relative">
+                        <img src="img/movie6.jpg" class="card-img-top" alt="Movie Title">
+                        <span class="badge bg-danger position-absolute top-0 end-0 m-2">Coming Soon</span>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Quantum Paradox</h5>
+                        <div class="d-flex justify-content-between mb-2">
+                            <span class="badge bg-primary">Sci-Fi</span>
+                            <span class="badge bg-secondary">Thriller</span>
+                        </div>
+                        <p class="card-text">A mind-bending sci-fi thriller that explores the concept of parallel
+                            universes.</p>
+                        <p class="release-date"><i class="far fa-calendar-alt me-1"></i> Release Date: August 20, 2025
+                        </p>
+                        <p class="duration"><i class="far fa-clock me-1"></i> Duration: 2h 25m</p>
+                    </div>
+                    <div class="card-footer bg-white border-top-0">
+                        <button class="btn btn-outline-primary w-100" data-bs-toggle="modal"
+                            data-bs-target="#trailerModal6">
+                            <i class="fas fa-play-circle me-1"></i> Watch Trailer
+                        </button>
+                        <button class="btn btn-success w-100 mt-2 notify-btn">
+                            <i class="fas fa-bell me-1"></i> Notify Me
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Movie Card 7 -->
+            <div class="col-md-4 col-lg-3 mb-4" data-genre="comedy drama">
+                <div class="card movie-card h-100">
+                    <div class="position-relative">
+                        <img src="img/movie7.jpg" class="card-img-top" alt="Movie Title">
+                        <span class="badge bg-danger position-absolute top-0 end-0 m-2">Coming Soon</span>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Life's Comedies</h5>
+                        <div class="d-flex justify-content-between mb-2">
+                            <span class="badge bg-warning text-dark">Comedy</span>
+                            <span class="badge bg-info">Drama</span>
+                        </div>
+                        <p class="card-text">A heartwarming dramedy about finding joy in life's most challenging
+                            moments.</p>
+                        <p class="release-date"><i class="far fa-calendar-alt me-1"></i> Release Date: July 28, 2025</p>
+                        <p class="duration"><i class="far fa-clock me-1"></i> Duration: 2h 5m</p>
+                    </div>
+                    <div class="card-footer bg-white border-top-0">
+                        <button class="btn btn-outline-primary w-100" data-bs-toggle="modal"
+                            data-bs-target="#trailerModal7">
+                            <i class="fas fa-play-circle me-1"></i> Watch Trailer
+                        </button>
+                        <button class="btn btn-success w-100 mt-2 notify-btn">
+                            <i class="fas fa-bell me-1"></i> Notify Me
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Movie Card 8 -->
+            <div class="col-md-4 col-lg-3 mb-4" data-genre="horror">
+                <div class="card movie-card h-100">
+                    <div class="position-relative">
+                        <img src="img/movie8.jpg" class="card-img-top" alt="Movie Title">
+                        <span class="badge bg-danger position-absolute top-0 end-0 m-2">Coming Soon</span>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Whispers in the Dark</h5>
+                        <div class="d-flex justify-content-between mb-2">
+                            <span class="badge bg-dark">Horror</span>
+                        </div>
+                        <p class="card-text">A psychological horror that explores the darkest corners of the human mind.
+                        </p>
+                        <p class="release-date"><i class="far fa-calendar-alt me-1"></i> Release Date: October 15, 2025
+                        </p>
+                        <p class="duration"><i class="far fa-clock me-1"></i> Duration: 1h 52m</p>
+                    </div>
+                    <div class="card-footer bg-white border-top-0">
+                        <button class="btn btn-outline-primary w-100" data-bs-toggle="modal"
+                            data-bs-target="#trailerModal8">
+                            <i class="fas fa-play-circle me-1"></i> Watch Trailer
+                        </button>
+                        <button class="btn btn-success w-100 mt-2 notify-btn">
+                            <i class="fas fa-bell me-1"></i> Notify Me
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Load More Button -->
+        <div class="text-center mt-4">
+            <button class="btn btn-outline-primary px-4" id="load-more-btn">
+                Load More <i class="fas fa-chevron-down ms-1"></i>
+            </button>
+        </div>
+    </section>
+
+    <!-- Trailer Modals -->
+    <div class="modal fade" id="trailerModal1" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Galactic Odyssey - Official Trailer</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="ratio ratio-16x9">
+                        <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="Movie Trailer"
+                            allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Modal -->
+    <div class="modal fade" id="notifyModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Get Notified</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Enter your email to receive updates about this movie's release, ticket availability, and special
+                        promotions.</p>
+                    <form id="notify-form">
+                        <div class="mb-3">
+                            <label for="notify-email" class="form-label">Email address</label>
+                            <input type="email" class="form-control" id="notify-email" required>
+                        </div>
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" type="checkbox" id="notify-promo" checked>
+                            <label class="form-check-label" for="notify-promo">
+                                Also send me promotional offers and discounts
+                            </label>
+                        </div>
+                        <button type="submit" class="btn btn-success w-100">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-3 mb-md-0">
+                    <h5>About MovieBox</h5>
+                    <p class="text-muted">Your ultimate destination for movie tickets and entertainment.</p>
+                    <div class="social-links">
+                        <a href="#" class="text-white me-2"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-white me-2"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-white me-2"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-white"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-2 mb-3 mb-md-0">
+                    <h5>Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="index.html" class="text-muted">Home</a></li>
+                        <li><a href="movies.html" class="text-muted">Movies</a></li>
+                        <li><a href="upcoming.html" class="text-muted">Upcoming</a></li>
+                        <li><a href="about.html" class="text-muted">About Us</a></li>
+                        <li><a href="contact.html" class="text-muted">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3 mb-3 mb-md-0">
+                    <h5>Contact</h5>
+                    <address class="text-muted">
+                        <i class="fas fa-map-marker-alt me-2"></i>123 Movie Street<br>
+                        Hollywood, CA 90001<br>
+                        <i class="fas fa-phone me-2"></i>(123) 456-7890<br>
+                        <i class="fas fa-envelope me-2"></i>info@moviebox.com
+                    </address>
+                </div>
+                <div class="col-md-3">
+                    <h5>Newsletter</h5>
+                    <p class="text-muted">Subscribe for updates on new releases and special offers.</p>
+                    <form>
+                        <div class="input-group mb-3">
+                            <input type="email" class="form-control" placeholder="Your email">
+                            <button class="btn btn-primary" type="button">Subscribe</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <hr class="my-4">
+            <div class="row">
+                <div class="col-md-6 text-center text-md-start">
+                    <p class="mb-0 text-muted">&copy; 2025 MovieBox. All rights reserved.</p>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <p class="mb-0 text-muted">
+                        <a href="#" class="text-muted me-3">Terms of Service</a>
+                        <a href="#" class="text-muted me-3">Privacy Policy</a>
+                        <a href="#" class="text-muted">FAQ</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Firebase Integration - to be connected with your Firebase backend
+        document.addEventListener('DOMContentLoaded', function () {
+            // Filter functionality
+            const filterBtn = document.getElementById('filter-btn');
+            const genreFilter = document.getElementById('genre-filter');
+
+            filterBtn.addEventListener('click', function () {
+                const selectedGenre = genreFilter.value;
+                filterMovies(selectedGenre);
+            });
+
+            function filterMovies(genre) {
+                const movieCards = document.querySelectorAll('#upcoming-movies-container .col-md-4');
+
+                movieCards.forEach(card => {
+                    const cardGenres = card.getAttribute('data-genre');
+
+                    if (!genre || cardGenres.includes(genre)) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            }
+
+            // Search functionality
+            const searchBtn = document.getElementById('search-btn');
+            const searchInput = document.getElementById('search-input');
+
+            searchBtn.addEventListener('click', function () {
+                const searchTerm = searchInput.value.toLowerCase();
+                searchMovies(searchTerm);
+            });
+
+            searchInput.addEventListener('keypress', function (e) {
+                if (e.key === 'Enter') {
+                    const searchTerm = searchInput.value.toLowerCase();
+                    searchMovies(searchTerm);
+                }
+            });
+
+            function searchMovies(term) {
+                const movieCards = document.querySelectorAll('#upcoming-movies-container .col-md-4');
+
+                movieCards.forEach(card => {
+                    const title = card.querySelector('.card-title').textContent.toLowerCase();
+                    const description = card.querySelector('.card-text').textContent.toLowerCase();
+
+                    if (title.includes(term) || description.includes(term)) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            }
+
+            // Notify Me functionality
+            const notifyBtns = document.querySelectorAll('.notify-btn');
+            const notifyModal = new bootstrap.Modal(document.getElementById('notifyModal'));
+
+            notifyBtns.forEach(btn => {
+                btn.addEventListener('click', function () {
+                    const movieTitle = this.closest('.card').querySelector('.card-title').textContent;
+                    document.querySelector('#notifyModal .modal-title').textContent = `Get Notified: ${movieTitle}`;
+                    notifyModal.show();
+                });
+            });
+
+            // Form submission for notifications
+            const notifyForm = document.getElementById('notify-form');
+
+            notifyForm.addEventListener('submit', function (e) {
+                e.preventDefault();
+
+                const email = document.getElementById('notify-email').value;
+                const promoConsent = document.getElementById('notify-promo').checked;
+
+                // Here you would typically send this data to your Firebase backend
+                console.log(`Notification subscription: ${email}, Promo consent: ${promoConsent}`);
+
+                // Show success message
+                this.innerHTML = '<div class="alert alert-success">Thanks! We\'ll notify you when this movie is available.</div>';
+
+                // Close modal after a delay
+                setTimeout(() => {
+                    notifyModal.hide();
+                    // Reset form for next use
+                    notifyForm.innerHTML = `
+                        <div class="mb-3">
+                            <label for="notify-email" class="form-label">Email address</label>
+                            <input type="email" class="form-control" id="notify-email" required>
+                        </div>
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" type="checkbox" id="notify-promo" checked>
+                            <label class="form-check-label" for="notify-promo">
+                                Also send me promotional offers and discounts
+                            </label>
+                        </div>
+                        <button type="submit" class="btn btn-success w-100">Subscribe</button>
+                    `;
+                }, 2000);
+            });
+
+            // Load more button functionality (for demonstration purposes)
+            const loadMoreBtn = document.getElementById('load-more-btn');
+            let loadMoreClicked = false;
+
+            loadMoreBtn.addEventListener('click', function () {
+                if (!loadMoreClicked) {
+                    // Clone the first 4 cards and append them to the container
+                    const movieContainer = document.getElementById('upcoming-movies-container');
+                    const firstFourCards = document.querySelectorAll('#upcoming-movies-container .col-md-4:nth-child(-n+4)');
+
+                    firstFourCards.forEach(card => {
+                        const cardClone = card.cloneNode(true);
+                        const cardTitle = cardClone.querySelector('.card-title');
+                        cardTitle.textContent += ' 2';
+                        movieContainer.appendChild(cardClone);
+                    });
+
+                    loadMoreClicked = true;
+                    this.textContent = 'No More Movies';
+                    this.disabled = true;
+                }
+            });
+
+            // Initialize authenticated user dropdown if logged in
+            const userLoggedIn = false; // Replace with actual Firebase auth check
+            if (userLoggedIn) {
+                document.getElementById('login-btn').style.display = 'none';
+                document.getElementById('signup-btn').style.display = 'none';
+                // Show user dropdown code would go here
+            }
+        });
+    </script>
+</body>
+
+</html>
