@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Movie Ticket Reservation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            background-color: #444;
+        }
+
+        nav button {
+            padding: 15px 20px;
+            background-color: transparent;
+            border: none;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        nav button:hover {
+            background-color: #555;
+        }
+
+        .container {
+            padding: 20px;
+        }
+
+        .section {
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 10px;
+        }
+
+        .form-group label {
+            display: block;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 8px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f0f0f0;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Admin Dashboard - Movie Ticket Reservation</h1>
+    </header>
+    <nav>
+        <button onclick="showSection('dashboard')">Dashboard</button>
+        <button onclick="showSection('movies')">Movies</button>
+        <button onclick="showSection('showtimes')">Showtimes</button>
+        <button onclick="showSection('bookings')">Bookings</button>
+    </nav>
+
+    <div class="container">
+        <div id="dashboard" class="section active">
+            <h2>Dashboard Overview</h2>
+            <p>Total Movies: <span id="totalMovies">0</span></p>
+            <p>Total Bookings: <span id="totalBookings">0</span></p>
+        </div>
+
+        <div id="movies" class="section">
+            <h2>Manage Movies</h2>
+            <div class="form-group">
+                <label>Title:</label>
+                <input type="text" id="movieTitle">
+            </div>
+            <div class="form-group">
+                <label>Genre:</label>
+                <input type="text" id="movieGenre">
+            </div>
+            <div class="form-group">
+                <label>Description:</label>
+                <textarea id="movieDesc"></textarea>
+            </div>
+            <div class="form-group">
+                <label>Language:</label>
+                <input type="text" id="movieLang">
+            </div>
+            <button onclick="addMovie()">Add Movie</button>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Genre</th>
+                        <th>Description</th>
+                        <th>Language</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="movieTable"></tbody>
+            </table>
+        </div>
+
+        <div id="showtimes" class="section">
+            <h2>Manage Showtimes</h2>
+            <div class="form-group">
+                <label>Movie:</label>
+                <select id="showMovieSelect"></select>
+            </div>
+            <div class="form-group">
+                <label>Time:</label>
+                <input type="text" id="showTime">
+            </div>
+            <div class="form-group">
+                <label>Seat Limit:</label>
+                <input type="number" id="seatLimit">
+            </div>
+            <div class="form-group">
+                <label>Price:</label>
+                <input type="number" id="showPrice">
+            </div>
+            <button onclick="addShowtime()">Add Showtime</button>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Movie</th>
+                        <th>Time</th>
+                        <th>Seats</th>
+                        <th>Price</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="showtimeTable"></tbody>
+            </table>
+        </div>
+
+        <div id="bookings" class="section">
+            <h2>Manage Bookings</h2>
+            <div class="form-group">
+                <label>Movie:</label>
+                <select id="bookingMovieSelect"></select>
+            </div>
+            <div class="form-group">
+                <label>Time:</label>
+                <select id="bookingTimeSelect"></select>
+            </div>
+            <div class="form-group">
+                <label>Seats to Book:</label>
+                <input type="number" id="seatsToBook">
+            </div>
+            <button onclick="simulateBooking()">Simulate Booking</button>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Movie</th>
+                        <th>Time</th>
+                        <th>Seats Booked</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="bookingTable"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        let movies = [];
+        let bookings = [];
+        let showtimes = [];
+
+        function showSection(id) {
+            document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+            if (id === 'showtimes') populateMovieSelect();
+            if (id === 'bookings') populateBookingMovieSelect();
+        }
+
+        function addMovie() {
+            const title = document.getElementById("movieTitle").value;
+            const genre = document.getElementById("movieGenre").value;
+            const desc = document.getElementById("movieDesc").value;
+            const lang = document.getElementById("movieLang").value;
+
+            if (title && genre && desc && lang) {
+                const movie = { title, genre, desc, lang };
+                movies.push(movie);
+                renderMovies();
+                updateDashboard();
+            } else {
+                alert("Please fill in all fields.");
+            }
+        }
+
+        function deleteMovie(index) {
+            movies.splice(index, 1);
+            renderMovies();
+            updateDashboard();
+        }
+
+        function renderMovies() {
+            const table = document.getElementById("movieTable");
+            table.innerHTML = "";
+            movies.forEach((movie, index) => {
+                table.innerHTML += `
+                    <tr>
+                        <td>${movie.title}</td>
+                        <td>${movie.genre}</td>
+                        <td>${movie.desc}</td>
+                        <td>${movie.lang}</td>
+                        <td><button onclick="deleteMovie(${index})">Delete</button></td>
+                    </tr>
+                `;
+            });
+        }
+
+        function updateDashboard() {
+            document.getElementById("totalMovies").innerText = movies.length;
+            document.getElementById("totalBookings").innerText = bookings.length;
+        }
+
+        function populateMovieSelect() {
+            const select = document.getElementById("showMovieSelect");
+            select.innerHTML = "";
+            movies.forEach((movie, index) => {
+                const option = document.createElement("option");
+                option.value = index;
+                option.textContent = movie.title;
+                select.appendChild(option);
+            });
+        }
+
+        function populateBookingMovieSelect() {
+            const movieSelect = document.getElementById("bookingMovieSelect");
+            movieSelect.innerHTML = "";
+            const timeSelect = document.getElementById("bookingTimeSelect");
+            timeSelect.innerHTML = "";
+
+            const movieTitles = [...new Set(showtimes.map(show => show.movie))];
+            movieTitles.forEach(title => {
+                const option = document.createElement("option");
+                option.value = title;
+                option.textContent = title;
+                movieSelect.appendChild(option);
+            });
+
+            movieSelect.onchange = function () {
+                const selectedMovie = this.value;
+                timeSelect.innerHTML = "";
+                const times = showtimes.filter(show => show.movie === selectedMovie);
+                times.forEach(show => {
+                    const option = document.createElement("option");
+                    option.value = show.time;
+                    option.textContent = show.time;
+                    timeSelect.appendChild(option);
+                });
+            };
+        }
+
+        function addShowtime() {
+            const movieIndex = document.getElementById("showMovieSelect").value;
+            const time = document.getElementById("showTime").value;
+            const seats = document.getElementById("seatLimit").value;
+            const price = document.getElementById("showPrice").value;
+
+            if (movieIndex !== "" && time && seats && price) {
+                const show = {
+                    movie: movies[movieIndex].title,
+                    time,
+                    seats: parseInt(seats),
+                    price: parseFloat(price)
+                };
+                showtimes.push(show);
+                renderShowtimes();
+            } else {
+                alert("Please fill in all fields.");
+            }
+        }
+
+        function deleteShowtime(index) {
+            showtimes.splice(index, 1);
+            renderShowtimes();
+        }
+
+        function renderShowtimes() {
+            const table = document.getElementById("showtimeTable");
+            table.innerHTML = "";
+            showtimes.forEach((show, index) => {
+                table.innerHTML += `
+                    <tr>
+                        <td>${show.movie}</td>
+                        <td>${show.time}</td>
+                        <td>${show.seats}</td>
+                        <td>${show.price}</td>
+                        <td><button onclick="deleteShowtime(${index})">Delete</button></td>
+                    </tr>
+                `;
+            });
+        }
+
+        function simulateBooking() {
+            const movie = document.getElementById("bookingMovieSelect").value;
+            const time = document.getElementById("bookingTimeSelect").value;
+            const seats = parseInt(document.getElementById("seatsToBook").value);
+
+            if (movie && time && seats > 0) {
+                bookings.push({ movie, time, seats });
+                updateDashboard();
+                renderBookings();
+            } else {
+                alert("Please fill all fields with valid data.");
+            }
+        }
+
+        function renderBookings() {
+            const table = document.getElementById("bookingTable");
+            table.innerHTML = "";
+            bookings.forEach((booking, index) => {
+                table.innerHTML += `
+                    <tr>
+                        <td>${booking.movie}</td>
+                        <td>${booking.time}</td>
+                        <td>${booking.seats}</td>
+                        <td><button onclick="deleteBooking(${index})">Cancel</button></td>
+                    </tr>
+                `;
+            });
+        }
+
+        function deleteBooking(index) {
+            bookings.splice(index, 1);
+            renderBookings();
+            updateDashboard();
+        }
+    </script>
+</body>
+
+</html>
